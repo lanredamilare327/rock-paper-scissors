@@ -24,12 +24,18 @@
   "
   >Scissors</button>
 
+
+<p class="js-result"></p>
+<p class="js-moves"></p>
+<p class="js-score-Element"></p>
+
   <button
   onclick="
   score.wins = 0;
   score.losses = 0;
   score.ties = 0;
   localStorage.removeItem('score');
+  paragraphScore();
   "
   >
     Reset Score
@@ -41,6 +47,8 @@ let score =JSON.parse(localStorage.getItem('score'))||
 losses: 0,
 ties: 0
 };
+
+paragraphScore();
 
   function playGame (playerMove) {
     const computerMove = pickComputerMove();
@@ -94,12 +102,18 @@ ties: 0
     }
     
     localStorage.setItem('score', JSON.stringify(score));
-
-alert(`You picked ${playerMove}. Computer picked ${computerMove}. ${result}
-wins:${score.wins}, Losses:${score.losses}, Ties:${score.ties}
-`);
+    paragraphScore();
+document.querySelector('.js-result').innerHTML= `${result}`;
+document.querySelector('.js-moves').innerHTML = `You ${playerMove}- ${computerMove} Computer`;
   }
      
+
+  function paragraphScore () {
+  let scoreChange = document.querySelector('.js-score-Element');
+scoreChange.innerHTML = `wins:${score.wins}, Losses:${score.losses}, Ties:${score.ties}`;
+  }
+
+
   function pickComputerMove () {
   const randomNumber = Math.random();
   let computerMove;
